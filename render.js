@@ -1,35 +1,33 @@
-const selectors = {
-	knight: {
-		health: ".knight-health",
-		energy: ".knight-energy",
-		mana: ".knight-mana",
+const SELECTORS = {
+	KNIGHT: {
+		HEALTH: ".knight-health",
+		ENERGY: ".knight-energy",
+		MANA: ".knight-mana",
 	},
-	wizard: {
-		health: ".mag-health",
-		energy: ".mag-energy",
-		mana: ".mag-mana",
+	WIZARD: {
+		HEALTH: ".mag-health",
+		ENERGY: ".mag-energy",
+		MANA: ".mag-mana",
 	},
 };
 
-const Render = (() => {
+const renderModule = (() => {
 	const setBarWidth = (selector, value) => {
 		document.querySelector(selector).style.width = `${value}%`;
 	};
 
 	const updateUI = (player, computer, playerChoice) => {
-		console.log("Player choice in updateUI:", playerChoice);
-
-		const playerSelectors = selectors[playerChoice];
+		const playerSelectors = SELECTORS[playerChoice.toUpperCase()];
 		const computerSelectors =
-			selectors[playerChoice === "knight" ? "wizard" : "knight"];
+			SELECTORS[playerChoice.toUpperCase() === "WIZARD" ? "KNIGHT" : "WIZARD"];
 
-		setBarWidth(playerSelectors.health, player.health);
-		setBarWidth(playerSelectors.energy, player.energy);
-		setBarWidth(playerSelectors.mana, player.mana);
+		setBarWidth(playerSelectors.HEALTH, player.health);
+		setBarWidth(playerSelectors.ENERGY, player.energy);
+		setBarWidth(playerSelectors.MANA, player.mana);
 
-		setBarWidth(computerSelectors.health, computer.health);
-		setBarWidth(computerSelectors.energy, computer.energy);
-		setBarWidth(computerSelectors.mana, computer.mana);
+		setBarWidth(computerSelectors.HEALTH, computer.health);
+		setBarWidth(computerSelectors.ENERGY, computer.energy);
+		setBarWidth(computerSelectors.MANA, computer.mana);
 	};
 
 	return {

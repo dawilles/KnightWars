@@ -8,39 +8,39 @@ const app = (() => {
 	};
 
 	const getCheckedValue = (formSelector, actionName) => {
-		return document.querySelector(
-			`input[name="${actionName}"]:checked`,
-			formSelector,
-		).value;
+		const form = document.querySelector(formSelector);
+		return form.querySelector(`input[name="${actionName}"]:checked`).value;
 	};
 
 	const setupEventListener = (selector, eventType, callback) => {
 		document.querySelector(selector).addEventListener(eventType, callback);
 	};
 
+	const game = gameModule;
+
 	setupEventListener(".choice-knight", "click", () => {
 		hideElement(".choice-hero");
 		showElement(".form-knight");
 		console.log("Player chose knight.");
-		Game.start("knight");
+		game.start("knight");
 	});
 
 	setupEventListener(".choice-wizard", "click", () => {
 		hideElement(".choice-hero");
 		showElement(".form-mag");
 		console.log("Player chose wizard.");
-		Game.start("wizard");
+		game.start("wizard");
 	});
 
 	setupEventListener(".form-knight", "submit", (event) => {
 		event.preventDefault();
 		const action = getCheckedValue(".form-knight", "knight-action");
-		Game.turn(action);
+		game.turn(action);
 	});
 
 	setupEventListener(".form-mag", "submit", (event) => {
 		event.preventDefault();
 		const action = getCheckedValue(".form-mag", "mag-action");
-		Game.turn(action);
+		game.turn(action);
 	});
 })();
