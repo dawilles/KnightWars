@@ -1,46 +1,85 @@
-const app = (() => {
-	const hideElement = (selector) => {
-		document.querySelector(selector).style.display = "none";
-	};
+const app = ((renderModule, gameAi) => {
+  const HERO_CLASSES = {
+    KNIGHT: "choice-knight",
+    WIZARD: "choice-wizard",
+  };
 
-	const showElement = (selector) => {
-		document.querySelector(selector).style.display = "block";
-	};
+  const init = () => {
+    document
+      .querySelector(".choice-hero-button")
+      .addEventListener("click", (event) => {
+        const isKnightSelected = event.target.classList.contains(
+          HERO_CLASSES.KNIGHT
+        );
+        const paladin = new Paladin(100, 100, 100);
+        const wizard = new Wizard(100, 100, 100);
+        const game = isKnightSelected
+          ? new Game(paladin, wizard, {
+              events: {
+                onGameFinished: () => {
+                  alert("Finished");
+                },
+                onTurnFinished: () => {},
+              },
+            })
+          : new Game(wizard, paladin);
 
-	const getCheckedValue = (formSelector, actionName) => {
-		const form = document.querySelector(formSelector);
-		return form.querySelector(`input[name="${actionName}"]:checked`).value;
-	};
+        initGameInterface(game);
+        initGameEvents(game);
+      });
+  };
 
-	const setupEventListener = (selector, eventType, callback) => {
-		document.querySelector(selector).addEventListener(eventType, callback);
-	};
+  const initGameInterface = (game) => {
+    const hideElement = (selector) => {
+      document.querySelector(selector).style.display = "none";
+    };
 
-	const game = gameModule;
+    const showElement = (selector) => {
+      document.querySelector(selector).style.display = "block";
+    };
 
-	setupEventListener(".choice-knight", "click", () => {
-		hideElement(".choice-hero");
-		showElement(".form-knight");
-		console.log("Player chose knight.");
-		game.start("knight");
-	});
+    if (game.playerHero.name === "paladin") {
+      hideElement(".choice-hero");
+      showElement(".form-knight");
+    } else {
+      hideElement(".choice-hero");
+      showElement(".form-mag");
+    }
+    renderModule.updateUI(
+      game.playerHero,
+      game.computerHero,
+      game.playerHero.name === "paladin" ? "knight" : "wizard"
+    );
+  };
 
-	setupEventListener(".choice-wizard", "click", () => {
-		hideElement(".choice-hero");
-		showElement(".form-mag");
-		console.log("Player chose wizard.");
-		game.start("wizard");
-	});
+  const initGameEvents = (game) => {
+    const getCheckedValue = (formSelector, actionName) => {
+      const form = document.querySelector(formSelector);
+      return form.querySelector(`input[name="${actionName}"]:checked`).value;
+    };
 
-	setupEventListener(".form-knight", "submit", (event) => {
-		event.preventDefault();
-		const action = getCheckedValue(".form-knight", "knight-action");
-		game.turn(action);
-	});
+    const setupEventListener = (selector, eventType, callback) => {
+      document.querySelector(selector).addEventListener(eventType, callback);
+    };
 
-	setupEventListener(".form-mag", "submit", (event) => {
-		event.preventDefault();
-		const action = getCheckedValue(".form-mag", "mag-action");
-		game.turn(action);
-	});
-})();
+    setupEventListener(".form-knight", "submit", (event) => {
+      event.preventDefault();
+      const action = getCheckedValue(".form-knight", "knight-action");
+      const computerAction = gameAi.getMove(game.playerHero, action);
+      game.turn(action, computerAction);
+    });
+
+    setupEventListener(".form-mag", "submit", (event) => {
+      event.preventDefault();
+      const action = getCheckedValue(".form-mag", "mag-action");
+      const computerAction = gameAi.getMove(game.playerHero, action);
+      game.turn(action, computerAction);
+    });
+  };
+
+  return {
+    init,
+  };
+})(renderModule, gameAi);
+
+app.init();
