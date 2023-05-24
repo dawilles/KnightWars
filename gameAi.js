@@ -1,32 +1,20 @@
-const gameAi = (() => {
-	let opponent;
-	let self;
-	const setOpponent = (opponentHero, selfHero) => {
-		opponent = opponentHero;
-		self = selfHero;
-	};
-
-	const getMove = () => {
+class GameAi {
+	getMove(opponent) {
 		if (opponent.health < 20) {
 			return "defend";
 		} else if (opponent.mana < 20 || opponent.energy < 20) {
 			return "wait";
 		} else if (
-			(self.energy <= 10 && self instanceof Heroes.Paladin) ||
-			(self.mana <= 10 && self instanceof Heroes.Magician)
+			(opponent.energy <= 10 && opponent instanceof Paladin) ||
+			(opponent.mana <= 10 && opponent instanceof Wizard)
 		) {
-			if (self.energy < 20 && self instanceof Heroes.Paladin) {
+			if (opponent.energy < 20 && opponent instanceof Paladin) {
 				return "wait";
-			} else if (self.mana < 20 && self instanceof Heroes.Magician) {
+			} else if (opponent.mana < 20 && opponent instanceof Wizard) {
 				return "wait";
 			}
 		} else {
 			return "attack";
 		}
-	};
-
-	return {
-		setOpponent,
-		getMove,
-	};
-})();
+	}
+}

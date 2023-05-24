@@ -1,10 +1,10 @@
 class Hero {
-	constructor(health, energy, mana, isPlayer) {
+	constructor(health, energy, mana) {
 		this.health = health;
 		this.energy = energy;
 		this.mana = mana;
 		this.defenseMode = false;
-		this.isPlayer = isPlayer;
+		this.name = "hero";
 	}
 
 	wait() {
@@ -21,6 +21,10 @@ class Hero {
 	}
 
 	hurt(points) {
+		if (!points) {
+			return;
+		}
+
 		if (this.defenseMode) {
 			points /= 2;
 			this.defenseMode = false;
@@ -31,10 +35,12 @@ class Hero {
 }
 
 class Paladin extends Hero {
+	name = "paladin";
+
 	attack() {
 		if (this.energy === 0) {
-			if (this.isPlayer)
-				alert("You have no energy left. You must wait or defend.");
+			// if (this.isPlayer)
+			//   alert("You have no energy left. You must wait or defend.");
 			return 0;
 		}
 		this.energy = Math.max(this.energy - 10, 0);
@@ -47,11 +53,13 @@ class Paladin extends Hero {
 	}
 }
 
-class Magician extends Hero {
+class Wizard extends Hero {
+	name = "wizard";
+
 	attack() {
 		if (this.mana === 0) {
-			if (this.isPlayer)
-				alert("You have no mana left. You must wait or defend.");
+			// if (this.isPlayer)
+			//   alert("You have no mana left. You must wait or defend.");
 			return 0;
 		}
 		this.mana = Math.max(this.mana - 10, 0);
@@ -63,8 +71,3 @@ class Magician extends Hero {
 		super.defend();
 	}
 }
-
-const Heroes = {
-	Paladin,
-	Magician,
-};
