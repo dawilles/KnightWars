@@ -1,5 +1,6 @@
 class GameAi {
-	getMove(opponent) {
+	getMove(game) {
+		const opponent = game.computerHero;
 		if (opponent.health < 20) {
 			return "defend";
 		} else if (opponent.mana < 20 || opponent.energy < 20) {
