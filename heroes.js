@@ -18,6 +18,7 @@ class Hero {
 
 	defend() {
 		this.defenseMode = true;
+		console.log(this.defenseMode);
 	}
 
 	hurt(points) {
@@ -39,12 +40,11 @@ class Paladin extends Hero {
 
 	attack() {
 		if (this.energy === 0) {
-			// if (this.isPlayer)
-			//   alert("You have no energy left. You must wait or defend.");
 			return 0;
 		}
 		this.energy = Math.max(this.energy - 10, 0);
-		return this.energy * Math.random() * 0.5;
+		const damage = this.energy * Math.random() * 0.5;
+		return damage;
 	}
 
 	defend() {
@@ -58,12 +58,11 @@ class Wizard extends Hero {
 
 	attack() {
 		if (this.mana === 0) {
-			// if (this.isPlayer)
-			//   alert("You have no mana left. You must wait or defend.");
 			return 0;
 		}
 		this.mana = Math.max(this.mana - 10, 0);
-		return this.mana * Math.random();
+		const damage = this.mana * Math.random() * 0.5;
+		return damage;
 	}
 
 	defend() {

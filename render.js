@@ -13,6 +13,28 @@ class Render {
 			},
 		};
 	}
+	initGameInterface(game) {
+		const hideElement = (selector) => {
+			document.querySelector(selector).style.display = "none";
+		};
+
+		const showElement = (selector) => {
+			document.querySelector(selector).style.display = "block";
+		};
+
+		if (game.playerHero.name === "paladin") {
+			hideElement(".choice-hero");
+			showElement(".form-knight");
+		} else {
+			hideElement(".choice-hero");
+			showElement(".form-mag");
+		}
+		this.updateUI(
+			game.playerHero,
+			game.computerHero,
+			game.playerHero.name === "paladin" ? "knight" : "wizard",
+		);
+	}
 
 	setBarWidth(selector, value) {
 		document.querySelector(selector).style.width = `${value}%`;

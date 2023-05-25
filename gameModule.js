@@ -49,7 +49,8 @@ class Game {
 
 		this.playerHero.hurt(computerDamage);
 		this.computerHero.hurt(playerDamage);
-
+		this.playerHero.defenseMode = false;
+		this.computerHero.defenseMode = false;
 		console.log(this);
 
 		if (this.playerHero.health <= 0 || this.computerHero.health <= 0) {

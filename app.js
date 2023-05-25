@@ -3,12 +3,11 @@ const app = (() => {
 		const render = new Render();
 		const gameAi = new GameAi();
 		const createGame = (isKnight) => {
-			const player = isKnight
-				? new Paladin(100, 100, 100)
-				: new Wizard(100, 100, 100);
-			const computer = isKnight
-				? new Wizard(100, 100, 100)
-				: new Paladin(100, 100, 100);
+			const paladin = new Paladin(100, 100, 100);
+			const wizard = new Wizard(100, 100, 100);
+			const player = isKnight ? paladin : wizard;
+			const computer = isKnight ? wizard : paladin;
+
 			const game = new Game(player, computer, {
 				events: {
 					onGameFinished: () => {
@@ -17,7 +16,7 @@ const app = (() => {
 					onTurnFinished: () => {},
 				},
 			});
-			initGameInterface(game, render);
+			render.initGameInterface(game);
 			initGameEvents(game, gameAi, render);
 		};
 
@@ -30,29 +29,6 @@ const app = (() => {
 					createGame(false);
 				}
 			});
-	};
-	
-	const initGameInterface = (game, render) => {
-		const hideElement = (selector) => {
-			document.querySelector(selector).style.display = "none";
-		};
-
-		const showElement = (selector) => {
-			document.querySelector(selector).style.display = "block";
-		};
-
-		if (game.playerHero.name === "paladin") {
-			hideElement(".choice-hero");
-			showElement(".form-knight");
-		} else {
-			hideElement(".choice-hero");
-			showElement(".form-mag");
-		}
-		render.updateUI(
-			game.playerHero,
-			game.computerHero,
-			game.playerHero.name === "paladin" ? "knight" : "wizard",
-		);
 	};
 
 	const initGameEvents = (game, gameAi, render) => {
