@@ -18,7 +18,6 @@ class Hero {
 
 	defend() {
 		this.defenseMode = true;
-		console.log(this.defenseMode);
 	}
 
 	hurt(points) {

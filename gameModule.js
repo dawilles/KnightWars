@@ -1,16 +1,14 @@
+const DEFAULT_EVENTS = {
+    onGameFinished: () => {},
+    onTurnFinished: () => {}
+};
 class Game {
 	constructor(playerHero, computerHero, options) {
-		this.options = {
-			events: {
-				onGameFinished: () => {},
-				onTurnFinished: () => {},
-			},
-			...options,
-		};
-		this.isGameFinished = false;
-		this.playerHero = playerHero;
-		this.computerHero = computerHero;
-	}
+        this.options = Object.assign({}, DEFAULT_EVENTS, options);
+        this.isGameFinished = false;
+        this.playerHero = playerHero;
+        this.computerHero = computerHero;
+    }
 
 	makeTurnAndGetDamage(action, hero) {
 		switch (action) {
