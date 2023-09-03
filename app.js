@@ -1,89 +1,33 @@
-// const app = (() => {
-// 	const init = () => {
-// 		const render = new Render();
-// 		const gameAi = new GameAi();
-// 		const createGame = (isKnight) => {
-// 			const paladin = new Paladin(100, 100, 100);
-// 			const wizard = new Wizard(100, 100, 100);
-// 			const player = isKnight ? paladin : wizard;
-// 			const computer = isKnight ? wizard : paladin;
-
-// 			const game = new Game(player, computer, {
-// 				events: {
-// 					onGameFinished: () => {
-// 						alert("Finished");
-// 					},
-// 					onTurnFinished: () => {},
-// 				},
-// 			});
-// 			render.initGameInterface(game);
-// 			initGameEvents(game, gameAi, render);
-// 		};
-
-// 		document
-// 			.querySelector(".choice-buttons")
-// 			.addEventListener("click", (event) => {
-// 				if (event.target.classList.contains("choice-knight")) {
-// 					createGame(true);
-// 				} else if (event.target.classList.contains("choice-wizard")) {
-// 					createGame(false);
-// 				}
-// 			});
-// 	};
-
-// 	const initGameEvents = (game, gameAi, render) => {
-// 		const getCheckedValue = (formSelector, actionName) => {
-// 			const form = document.querySelector(formSelector);
-// 			return form.querySelector(`input[name="${actionName}"]:checked`).value;
-// 		};
-
-// 		const setupEventListener = (selector, eventType, callback) => {
-// 			document.querySelector(selector).addEventListener(eventType, callback);
-// 		};
-
-// 		setupEventListener(".form-knight", "submit", (event) => {
-// 			event.preventDefault();
-// 			const action = getCheckedValue(".form-knight", "knight-action");
-// 			const computerAction = gameAi.getMove(game);
-// 			game.turn(action, computerAction, render);
-// 		});
-
-// 		setupEventListener(".form-mag", "submit", (event) => {
-// 			event.preventDefault();
-// 			const action = getCheckedValue(".form-mag", "mag-action");
-// 			const computerAction = gameAi.getMove(game);
-// 			game.turn(action, computerAction, render);
-// 		});
-// 	};
-
-// 	return {
-// 		init,
-// 	};
-// })();
-
-// app.init();
-
 const app = (() => {
+	// Function to create a new game based on the player's hero choice
 	const createGame = (isKnight) => {
 		const paladin = new Paladin(100, 100, 100);
 		const wizard = new Wizard(100, 100, 100);
 		const player = isKnight ? paladin : wizard;
 		const computer = isKnight ? wizard : paladin;
 
+		// Create game instance
 		const game = new Game(player, computer, {
 			events: {
-				onGameFinished: () => {
-					alert("Finished");
+				onGameFinished: (isPlayerWinner) => {
+					alert(
+						isPlayerWinner
+							? "You won! Press F5 to restart"
+							: "You lost! Press F5 to restart",
+					);
 				},
 				onTurnFinished: () => {},
 			},
 		});
+
+		// Initialize UI and AI
 		const render = new Render();
-		const gameAi = new GameAi();
+		const gameAi = new GameOpponent();
 		render.initGameInterface(game);
 		initGameEvents(game, gameAi, render);
 	};
 
+	// Initialize game hero choice buttons
 	const init = () => {
 		document
 			.querySelector(".choice-buttons")
@@ -96,13 +40,15 @@ const app = (() => {
 			});
 	};
 
+	// Initialize game events and interactions
 	const initGameEvents = (game, gameAi, render) => {
 		const getCheckedValue = (formSelector, actionName) => {
 			const form = document.querySelector(formSelector);
 			return form.querySelector(`input[name="${actionName}"]:checked`).value;
 		};
 
-		const setupEventListener = (selector, actionName, eventType, callback) => {
+		// Helper function to setup event listener for a form
+		const setupEventListener = (selector, actionName, eventType) => {
 			document.querySelector(selector).addEventListener(eventType, (event) => {
 				event.preventDefault();
 				const action = getCheckedValue(selector, actionName);
