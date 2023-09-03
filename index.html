@@ -1,12 +1,97 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KnightWars</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./heroes.js" defer></script>
+    <script src="./gameAi.js" defer></script>
+    <script src="./render.js" defer></script>
+    <script src="./gameModule.js" defer></script>
+    <script src="./app.js" defer></script>
 </head>
+
 <body>
-    
+
+    <section class="game">
+        <div class="choice-hero">
+            <h2 class="choice-title">Choose your hero!</h2>
+            <div class="choice-buttons">
+                <button class="choice-button choice-hero-button choice-knight">Knight</button>
+                <button class="choice-button choice-hero-button choice-wizard">Wizard</button>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="wrapper-knight">
+                <div class="knight-stats">
+                    <div class="stats mana knight-mana">
+                        <p>Mana</p>
+                    </div>
+                    <div class="stats health knight-health">
+                        <p>Health</p>
+                    </div>
+                    <div class="stats energy knight-energy">
+                        <p>Energy</p>
+                    </div>
+                </div>
+                <div class="hero-image"><img src="image/knight.png" alt="knight hero"></div>
+                <div class="wrapper-form">
+                    <form class="form-knight">
+                        <legend>Please select your Knight action</legend>
+                        <div>
+                            <input type="radio" id="wait-knight" name="knight-action" value="wait" />
+                            <label for="wait-knight">Wait</label>
+
+                            <input type="radio" id="attack-knight" name="knight-action" value="attack" />
+                            <label for="attack-knight">Attack</label>
+
+                            <input type="radio" id="defend-knight" name="knight-action" value="defend" />
+                            <label for="defend-knight">Defend</label>
+                            <button class="button-action button-knight" type="submit">Go</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="wrapper-mag">
+                <div class="mag-stats">
+                    <div class="stats mana mag-mana">
+                        <p>Mana</p>
+                    </div>
+                    <div class="stats health mag-health">
+                        <p>Health</p>
+                    </div>
+                    <div class="stats energy mag-energy">
+                        <p>Energy</p>
+                    </div>
+                </div>
+                <div class="hero-image"><img src="image/wizard.png" alt="wizard hero"></div>
+                <div class="wrapper-form">
+                    <form class="form-mag">
+                        <legend>Please select your Wizard action</legend>
+                        <div>
+                            <input type="radio" id="wait-mag" name="mag-action" value="wait" />
+                            <label for="wait-mag">Wait</label>
+
+                            <input type="radio" id="attack-mag" name="mag-action" value="attack" />
+                            <label for="attack-mag">Attack</label>
+
+                            <input type="radio" id="defend-mag" name="mag-action" value="defend" />
+                            <label for="defend-mag">Defend</label>
+                            <button class="button-action button-mag" type="submit">Go</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
 </body>
+
 </html>
