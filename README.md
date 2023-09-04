@@ -4,6 +4,10 @@
 
 This project is a strategy game that allows players to take on the role of various heroes with unique abilities. The game is coded in vanilla JavaScript and utilizes basic HTML for the UI, making it lightweight and easily accessible.
 
+## 🌐 Live Demo
+
+Check out the live demo to see the game in action: [Live Demo](https://main--lovely-daifuku-4dfb99.netlify.app/). Have fun and enjoy the game online!
+
 ## 🚀 Getting Started
 
 1. Clone the repository to your local machine.
